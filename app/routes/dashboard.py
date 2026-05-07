@@ -22,8 +22,16 @@ def index():
         total_evals = Evaluation.query.filter_by(evaluator_id=current_user.id).count()
         recent_projects = Project.query.filter_by(evaluator_id=current_user.id).order_by(Project.created_at.desc()).limit(5).all()
 
-    # Calculate avg score dummy/placeholder
-    avg_score = 4.2
+    from app import db
+    from sqlalchemy.sql import func
+    
+    # Calculate real average score from the database
+    result = db.session.query(func.avg(AIResponse.score_accuracy)).scalar()
+    
+    if result is not None:
+        avg_score = round(result, 1)
+    else:
+        avg_score = "N/A"
 
     return render_template('dashboard.html', 
                            total_projects=total_projects, 
