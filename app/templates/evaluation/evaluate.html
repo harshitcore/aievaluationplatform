@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row mb-3">
+    <div class="col">
+        <h3 class="text-primary">Evaluate: {{ project.title }}</h3>
+        <p class="text-muted">{{ project.description }}</p>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="mb-3">
+            <label for="promptInput" class="form-label fw-bold">Enter Prompt for AI</label>
+            <textarea class="form-control" id="promptInput" rows="3" placeholder="Type a prompt here to test the AI models..."></textarea>
+        </div>
+        <button id="generateBtn" class="btn btn-primary" onclick="generateResponses()">
+            <i class="bi bi-magic"></i> Generate Responses
+        </button>
+        <span id="loadingIndicator" class="ms-3 text-muted" style="display:none;">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Generating...
+        </span>
+    </div>
+</div>
+
+<div id="evaluationSection" style="display: none;">
+    <div class="row mb-4">
+        <!-- Model A -->
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0 border-top border-primary border-4">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Model A</h5>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="bestA" name="bestModel" onchange="toggleBest('A')">
+                        <label class="form-check-label" for="bestA"><i class="bi bi-trophy-fill text-warning"></i> Best</label>
+                    </div>
+                </div>
+                <div class="card-body bg-light">
+                    <div class="response-content p-3 bg-white border rounded mb-3" id="responseA" style="min-height: 150px; white-space: pre-wrap;"></div>
+                    
+                    <h6 class="border-bottom pb-2">Scoring (1-5)</h6>
+                    <div class="scoring-grid">
+                        <div class="mb-2 d-flex justify-content-between align-items-center">
+                            <label>Accuracy</label>
+                            <input type="number" class="form-control form-control-sm w-25" id="score_acc_a" min="1" max="5" value="3">
+                        </div>
+                        <div class="mb-2 d-flex justify-content-between align-items-center">
+                            <label>Relevance</label>
+                            <input type="number" class="form-control form-control-sm w-25" id="score_rel_a" min="1" max="5" value="3">
+                        </div>
+                        <div class="mb-2 d-flex justify-content-between align-items-center">
+                            <label>Clarity</label>
+                            <input type="number" class="form-control form-control-sm w-25" id="score_clarity_a" min="1" max="5" value="3">
+                        </div>
+                        <div class="mb-2 d-flex justify-content-between align-items-center">
+                            <label>Completeness</label>
+                            <input type="number" class="form-control form-control-sm w-25" id="score_comp_a" min="1" max="5" value="3">
+                        </div>
+                        <div class="mb-2 d-flex justify-content-between align-items-center">
+                            <label>Safety</label>
+                            <input type="number" class="form-control form-control-sm w-25" id="score_safe_a" min="1" max="5" value="5">
+                        </div>
+                    </div>
+                    
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" id="hallucinationA">
+                        <label class="form-check-label text-danger" for="hallucinationA">
+                            Contains Hallucination
+                        </label>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <label class="form-label">Feedback Notes</label>
+                        <textarea class="form-control form-control-sm" id="feedbackA" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model B -->
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0 border-top border-info border-4">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Model B</h5>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="bestB" name="bestModel" onchange="toggleBest('B')">
+                        <label class="form-check-label" for="bestB"><i class="bi bi-trophy-fill text-warning"></i> Best</label>
+                    </div>
+                </div>
+                <div class="card-body bg-light">
+                    <div class="response-content p-3 bg-white border rounded mb-3" id="responseB" style="min-height: 150px; white-space: pre-wrap;"></div>
+                    
+                    <h6 class="border-bottom pb-2">Scoring (1-5)</h6>
+                    <div class="scoring-grid">
+                        <div class="mb-2 d-flex justify-content-between align-items-center">
+                            <label>Accuracy</label>
+                            <input type="number" class="form-control form-control-sm w-25" id="score_acc_b" min="1" max="5" value="3">
+                        </div>
+                        <div class="mb-2 d-flex justify-content-between align-items-center">
+                            <label>Relevance</label>
+                            <input type="number" class="form-control form-control-sm w-25" id="score_rel_b" min="1" max="5" value="3">
+                        </div>
+                        <div class="mb-2 d-flex justify-content-between align-items-center">
+                            <label>Clarity</label>
+                            <input type="number" class="form-control form-control-sm w-25" id="score_clarity_b" min="1" max="5" value="3">
+                        </div>
+                        <div class="mb-2 d-flex justify-content-between align-items-center">
+                            <label>Completeness</label>
+                            <input type="number" class="form-control form-control-sm w-25" id="score_comp_b" min="1" max="5" value="3">
+                        </div>
+                        <div class="mb-2 d-flex justify-content-between align-items-center">
+                            <label>Safety</label>
+                            <input type="number" class="form-control form-control-sm w-25" id="score_safe_b" min="1" max="5" value="5">
+                        </div>
+                    </div>
+                    
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" id="hallucinationB">
+                        <label class="form-check-label text-danger" for="hallucinationB">
+                            Contains Hallucination
+                        </label>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <label class="form-label">Feedback Notes</label>
+                        <textarea class="form-control form-control-sm" id="feedbackB" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-end mb-5">
+        <button id="submitEvalBtn" class="btn btn-success btn-lg" onclick="submitEvaluation({{ project.id }})">
+            <i class="bi bi-check2-circle"></i> Submit Evaluation
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Will be handled in main.js
+</script>
+{% endblock %}
