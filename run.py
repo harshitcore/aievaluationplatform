@@ -7,7 +7,6 @@ app = create_app()
 # Automatically create database tables if they don't exist
 # This ensures Render initializes the PostgreSQL database automatically!
 with app.app_context():
-    db.drop_all()
     db.create_all()
 
 def open_browser():
