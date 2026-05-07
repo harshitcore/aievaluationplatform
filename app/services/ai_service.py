@@ -5,7 +5,8 @@ from openai import OpenAI
 # Load the .env file so the system can find OPENAI_API_KEY
 load_dotenv()
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+# Provide a fallback string so the app doesn't crash on boot if the key is missing
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "dummy-key-to-prevent-crash"))
 
 class RealAIService:
     @staticmethod
