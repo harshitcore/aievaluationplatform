@@ -1,78 +1,445 @@
 # AI Response Evaluation Platform
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![Python](https://img.shields.io/badge/python-3.12+-green.svg)
-![Flask](https://img.shields.io/badge/flask-3.0.0-lightgrey.svg)
+A lightweight full-stack platform for evaluating and comparing AI-generated responses through structured human feedback workflows inspired by RLHF (Reinforcement Learning from Human Feedback).
 
-## Project Overview
-The AI Response Evaluation Platform is a full-stack, production-ready web application built to simulate the complex evaluation workflows used in **RLHF** (Reinforcement Learning from Human Feedback) and **SFT** (Supervised Fine-Tuning) pipelines. 
+---
 
-It provides a structured, highly professional environment for Human Evaluators to prompt large language models, view side-by-side responses, and score them based on specific qualitative criteria to generate preference data.
+# 📌 Project Overview
 
+The AI Response Evaluation Platform is designed to simulate how modern AI systems are evaluated by human annotators. The application allows users to:
 
+* Generate multiple AI responses for a prompt
+* Compare responses side-by-side
+* Evaluate outputs using structured scoring metrics
+* Store evaluations and feedback
+* Manage projects and evaluator workflows
+
+This project demonstrates practical full-stack development skills using Flask, SQLAlchemy, SQLite/PostgreSQL, authentication systems, REST APIs, and responsive frontend design.
+
+---
+
+# 🚀 Features
 
 ## Core Features
-- **Real OpenAI Integration**: Direct integration with the `openai` Python SDK to generate live, side-by-side responses from multiple models. (Easily toggleable to a Mock API for offline demonstrations).
-- **Role-Based Access Control (RBAC)**: Secure, segmented workflows. Admins have global visibility and project creation rights, while Evaluators only see tasks explicitly assigned to them.
-- **Structured RLHF Scoring**: Evaluators grade responses on Accuracy, Relevance, Clarity, Completeness, and Safety (1-5 scale) and identify model "Hallucinations".
-- **Database Integrity**: Uses SQLAlchemy ORM with transactional sessions (`flush` and `commit`) to guarantee data integrity across highly relational data.
-- **SaaS Deployment Ready**: Built to be deployed to the cloud (Render/PostgreSQL) or instantly packaged as a standalone, double-clickable Windows `.exe` application.
 
-## Documentation Suite
-This project includes a comprehensive set of technical guides located in the `docs/` folder:
+* User Authentication & Authorization
+* Role-Based Access Control (Admin / Evaluator)
+* AI Response Comparison Interface
+* Structured Scoring System
+* Evaluation Submission Workflow
+* Dashboard Analytics
+* Project Management
+* Persistent Database Storage
+* Responsive UI using Bootstrap
 
-1. **[UNDERSTANDING.md](docs/UNDERSTANDING.md)**: The ultimate Technical Interview Cheat Sheet. Explains the architecture, the Application Factory pattern, database transaction tricks, and anticipated interview questions.
-2. **[stepsN.md](docs/stepsN.md)**: A complete, actionable guide to managing the database, from SQLite configuration to Flask-Migrate schema changes.
-3. **[Render Deployment.md](docs/Render Deployment.md)**: Step-by-step roadmap to deploying the app to the internet with Gunicorn and a Cloud PostgreSQL cluster.
-4. **[GitHub update.md](docs/GitHub%20update.md)**: Documentation on hosting the `.exe` via GitHub Releases and implementing seamless in-app auto-updates.
-5. **[TEST.txt](docs/TEST.txt)**: A strict quality assurance roadmap and edge-case debugging guide.
+## Evaluation Metrics
 
- 
+Responses can be evaluated on:
 
-## Architecture & Tech Stack
-- **Frontend**: HTML5, Vanilla JavaScript (ES6), CSS, Bootstrap 5.
-- **Backend**: Python 3, Flask (Application Factory architecture).
-- **Database**: SQLite (Local) / PostgreSQL (Cloud) with SQLAlchemy ORM.
-- **Authentication**: Flask-Login (session-based cookies) with Werkzeug password hashing.
-- **Packaging**: PyInstaller (for standalone executables).
+* Accuracy
+* Relevance
+* Clarity
+* Completeness
+* Safety
 
- 
+---
 
-## Setup & Run Instructions
+# 🛠️ Tech Stack
 
-### Option 1: Standard Python Execution
-1. **Clone the repository**:
-   ```bash
-   git clone <your-repo-url>
-   cd "AI Response Evaluation"
-   ```
-2. **Setup the Virtual Environment**:
-   ```bash
-   python -m venv venv
-   .\venv\Scripts\activate  # Windows
-   ```
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. **Configure your API Key**:
-   Create a `.env` file in the root directory and add:
-   ```env
-   OPENAI_API_KEY=sk-your-api-key-here
-   ```
-5. **Run the server**:
-   ```bash
-   python run.py
-   ```
-   *The application will automatically generate the `app.db` file and open your default web browser.*
+## Frontend
 
-### Option 2: Running the Executable (.exe)
-If you have packaged the application (or received the `dist/` folder):
-1. Navigate to the `dist` folder.
-2. Double-click `AIEvalPlatform.exe`. 
-3. The background server will boot silently, and your browser will automatically launch the application.
+* HTML5
+* CSS3
+* Bootstrap 5
+* Vanilla JavaScript
 
- 
+## Backend
 
-## Why This Project Matters
-This application captures the core mechanics of an internal AI annotation tool. In modern AI development, human labelers are presented with multiple model outputs and asked to grade them on specific axes (helpfulness, safety, accuracy). This data is the lifeblood required to construct reward models for **PPO (Proximal Policy Optimization)**. This application demonstrates a profound understanding of that exact pipeline, merging data science workflows with full-stack engineering.
+* Python
+* Flask
+* Flask Blueprints
+* Flask-Login
+* Flask-SQLAlchemy
+
+## Database
+
+### Development
+
+* SQLite
+
+### Production / Deployment
+
+* PostgreSQL
+
+## Deployment
+
+* Render
+* PyInstaller (Optional Desktop Executable)
+
+---
+
+# 📂 Project Structure
+
+```bash
+AI-Response-Evaluation/
+│
+├── app/
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   ├── static/
+│   ├── templates/
+│   ├── utils/
+│   └── __init__.py
+│
+├── migrations/
+├── venv/
+├── requirements.txt
+├── run.py
+├── README.md
+└── app.db
+```
+
+---
+
+# ⚙️ Installation & Setup
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/harshitcore/AIEvaluationPlatform.git
+cd "AI Response Evaluation"
+```
+
+---
+
+## 2. Create Virtual Environment
+
+### Windows
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+---
+
+## 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 4. Run Application
+
+```bash
+python run.py
+```
+
+---
+
+## 5. Open in Browser
+
+```text
+http://127.0.0.1:5000
+```
+
+---
+
+# 🗄️ Database Configuration
+
+## SQLite (Local Development)
+
+The application automatically creates:
+
+```text
+app.db
+```
+
+when the server starts.
+
+---
+
+## PostgreSQL (Production)
+
+Set environment variable:
+
+```env
+DATABASE_URL=postgresql://username:password@host/database
+```
+
+Example Flask configuration:
+
+```python
+import os
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
+    'DATABASE_URL',
+    'sqlite:///app.db'
+)
+```
+
+---
+
+# 🔐 Authentication System
+
+The platform uses:
+
+* Flask-Login for session management
+* Password hashing using Werkzeug
+* Role-Based Access Control (RBAC)
+
+### Roles
+
+| Role      | Permissions                        |
+| --------- | ---------------------------------- |
+| Admin     | Create projects, manage evaluators |
+| Evaluator | Evaluate assigned projects         |
+
+---
+
+# 📊 Database Schema
+
+## Users
+
+| Field         | Type    |
+| ------------- | ------- |
+| id            | Integer |
+| username      | String  |
+| password_hash | String  |
+| role          | String  |
+
+---
+
+## Projects
+
+| Field        | Type        |
+| ------------ | ----------- |
+| id           | Integer     |
+| title        | String      |
+| description  | Text        |
+| evaluator_id | Foreign Key |
+
+---
+
+## Evaluations
+
+| Field        | Type        |
+| ------------ | ----------- |
+| id           | Integer     |
+| prompt       | Text        |
+| project_id   | Foreign Key |
+| evaluator_id | Foreign Key |
+| status       | String      |
+
+---
+
+## AI Responses
+
+| Field         | Type           |
+| ------------- | -------------- |
+| id            | Integer        |
+| evaluation_id | Foreign Key    |
+| model_name    | String         |
+| content       | Text           |
+| scores        | Integer Fields |
+| feedback      | Text           |
+
+---
+
+# 🔄 Application Workflow
+
+```text
+User Login
+    ↓
+Project Selection
+    ↓
+Prompt Submission
+    ↓
+Generate AI Responses
+    ↓
+Side-by-Side Comparison
+    ↓
+Scoring & Feedback
+    ↓
+Store Evaluation in Database
+    ↓
+Dashboard Analytics
+```
+
+---
+
+# 🌐 API Endpoints
+
+| Method   | Route              | Description           |
+| -------- | ------------------ | --------------------- |
+| GET/POST | /login             | User login            |
+| GET/POST | /register          | User registration     |
+| GET      | /dashboard         | Main dashboard        |
+| GET      | /projects          | View projects         |
+| POST     | /projects/create   | Create project        |
+| POST     | /eval/api/generate | Generate AI responses |
+| POST     | /eval/api/submit   | Submit evaluation     |
+
+---
+
+# 🧠 AI Evaluation Concept
+
+This project is inspired by RLHF (Reinforcement Learning from Human Feedback) pipelines used in modern AI systems.
+
+The workflow:
+
+1. AI generates multiple responses
+2. Human evaluators compare outputs
+3. Responses are scored on multiple dimensions
+4. Evaluation data can later be used for fine-tuning AI systems
+
+This application represents a simplified annotation workflow commonly used in AI model evaluation systems.
+
+---
+
+# 🧪 Testing
+
+## Manual Testing Checklist
+
+* User Registration
+* Login / Logout
+* Role-based access restriction
+* Project creation
+* AI response generation
+* Evaluation submission
+* Database persistence
+* Dashboard metrics
+
+---
+
+# 🚀 Deployment
+
+## Render Deployment
+
+### Environment Variables
+
+```env
+DATABASE_URL=<your-postgresql-url>
+SECRET_KEY=<your-secret-key>
+```
+
+---
+
+## Build Command
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Start Command
+
+```bash
+gunicorn run:app
+```
+
+---
+
+# 💻 Desktop Executable (Optional)
+
+The application can also be packaged as a Windows executable using PyInstaller.
+
+```bash
+pyinstaller --name "AIEvalPlatform" --add-data "app/templates;app/templates" --add-data "app/static;app/static" run.py
+```
+
+---
+
+# 📸 Screenshots
+
+## Login Page
+
+*[Add Login Screenshot Here]*
+
+---
+
+## Dashboard
+
+*[Add Dashboard Screenshot Here]*
+
+---
+
+## Evaluation Interface
+
+*[Add Evaluation Screenshot Here]*
+
+---
+
+# 🔮 Future Improvements
+
+* Real OpenAI API integration
+* CSV/JSON export support
+* Advanced analytics dashboard
+* Multiple AI model support
+* Real-time collaborative evaluation
+* JWT authentication
+* Docker deployment
+* Background task queues
+
+---
+
+# 📚 Learning Outcomes
+
+This project demonstrates understanding of:
+
+* Full-stack web development
+* REST API architecture
+* Database design & ORM
+* Authentication systems
+* Role-Based Access Control
+* AI evaluation workflows
+* Frontend-backend integration
+* Flask application architecture
+* Deployment concepts
+
+---
+
+# 👨‍💻 Author
+
+## Harshit Sharma
+
+* Python Developer
+* AI & ML Enthusiast
+* Full-Stack Learner
+* Music Producer & Creative Technologist
+
+---
+
+# 📄 License
+
+This project is developed for educational and portfolio purposes.
+
+---
+
+# ⭐ Acknowledgements
+
+* Flask Documentation
+* SQLAlchemy Documentation
+* Bootstrap Documentation
+* OpenAI & RLHF research concepts
+
+---
+
+# 📬 Contact
+
+For collaboration, feedback, or opportunities:
+
+* GitHub: [github.com/harshitcore](https://github.com/harshitcore)
+* LinkedIn: *[www.linkedin.com/in/harshit-sharma-381548283]*
+* Email: *[harshitsharma.connnect@gmail.com]*

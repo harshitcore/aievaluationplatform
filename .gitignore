@@ -3,6 +3,7 @@ __pycache__/
 instance/
 .env
 app.db
+postgresqlaieval_db_usermDwyPWdbhFV.txt
 docs/
 dist/
 build/
