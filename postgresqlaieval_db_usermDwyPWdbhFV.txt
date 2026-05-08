@@ -1,8 +1,0 @@
-postgresql://aieval_db_user:mDwyPWdbhFVkcF9eBEmkQrfKX8btObMp@dpg-d7udq5beo5us73e0bv30-a/aieval_db
-
-
-PW - 3b5cb6a12d484b5585c2d6edec483fec
-
-internal Database URL
-postgres
-aieval-platform
