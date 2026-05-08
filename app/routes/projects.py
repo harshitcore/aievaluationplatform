@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from app.models.project import Project
-from app.models.user import User
 from app.utils.decorators import admin_required
 from app import db
 
@@ -13,28 +12,24 @@ def index():
     if current_user.is_admin():
         projects = Project.query.all()
     else:
-        projects = Project.query.filter_by(evaluator_id=current_user.id).all()
+        # Team Members see projects where they have assigned tasks
+        from app.models.task import Task
+        projects = Project.query.join(Task).filter(Task.assigned_to == current_user.id).distinct().all()
     return render_template('projects/index.html', projects=projects)
 
 @projects_bp.route('/create', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def create():
-    evaluators = User.query.filter_by(role='Evaluator').all()
-    
     if request.method == 'POST':
         title = request.form.get('title')
         description = request.form.get('description')
-        evaluator_id = request.form.get('evaluator_id')
         
-        # evaluator_id could be empty
-        eval_id = int(evaluator_id) if evaluator_id else None
-        
-        new_project = Project(title=title, description=description, evaluator_id=eval_id)
+        new_project = Project(title=title, description=description, created_by=current_user.id)
         db.session.add(new_project)
         db.session.commit()
         
         flash('Project created successfully!', 'success')
         return redirect(url_for('projects.index'))
         
-    return render_template('projects/create.html', evaluators=evaluators)
+    return render_template('projects/create.html')

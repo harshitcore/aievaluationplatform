@@ -37,17 +37,17 @@ def create_app():
     login_manager.login_message_category = 'info'
     migrate.init_app(app, db)
 
-    from app.models import user, project, evaluation, response
+    from app.models import user, project, task, comment
 
     from app.routes.auth import auth_bp
     from app.routes.dashboard import dashboard_bp
     from app.routes.projects import projects_bp
-    from app.routes.evaluation import eval_bp
+    from app.routes.tasks import tasks_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(projects_bp)
-    app.register_blueprint(eval_bp)
+    app.register_blueprint(tasks_bp)
 
     @login_manager.user_loader
     def load_user(user_id):

@@ -8,9 +8,8 @@ class Project(db.Model):
     title = db.Column(db.String(120), nullable=False)
     description = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    evaluator_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
-    evaluations = db.relationship('Evaluation', backref='project', lazy='dynamic')
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    tasks = db.relationship('Task', backref='project', lazy='dynamic', cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'<Project {self.title}>'

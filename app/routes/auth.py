@@ -33,7 +33,7 @@ def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        role = request.form.get('role', 'Evaluator')
+        role = request.form.get('role', 'Team Member')
         
         if User.query.filter_by(username=username).first():
             flash('Username already exists.', 'warning')
