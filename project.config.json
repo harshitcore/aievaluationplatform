@@ -1,0 +1,21 @@
+{
+  "name": "AI Evaluation Platform",
+  "category": "AI/ML Systems",
+  "stack": ["Flask", "PostgreSQL", "OpenAI API", "HTML", "CSS", "JavaScript", "Python"],
+  "description": "A full-stack, production-ready AI Response Evaluation platform simulating RLHF and SFT workflows. Built with Flask, PostgreSQL, and the OpenAI API. Features Role-Based Access Control and side-by-side model comparison.",
+  "problem": "Evaluating AI model responses manually is time-consuming and inconsistent across teams, making it difficult to track model performance improvements.",
+  "solution": "Provide a centralized evaluation platform with RBAC, automated evaluation workflows, and comparative analysis tools for different AI models.",
+  "features": [
+    "Role-Based Access Control (RBAC) for multi-user access",
+    "Side-by-side model comparison interface",
+    "RLHF (Reinforcement Learning from Human Feedback) simulation",
+    "SFT (Supervised Fine-Tuning) workflow support",
+    "Production-ready architecture with PostgreSQL backend",
+    "OpenAI API integration for evaluation"
+  ],
+  "challenges": [
+    "Placeholder: Add technical challenges faced during development"
+  ],
+  "liveUrl": "https://github.com/harshitcore/AIEvaluationPlatform",
+  "architectureDiagram": ""
+}
